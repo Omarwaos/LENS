@@ -1,4 +1,5 @@
 import { writeTransaction } from '../../services/transaction.js';
+import { pickResponsibleColor } from '../../services/colores.js';
 
 function futureDate(days, time) {
   const day = new Date(Date.now() - 5 * 60 * 60 * 1000);
@@ -55,8 +56,12 @@ export async function seed(knex) {
     const { id: videographer } = await trx('personal').where('documento', 'DEMO-002').first('id');
     const [responsable_id] = await trx('responsables').insert({
       evento_id: eventId, personal_id: photographer, rol: 'Fotógrafa principal',
+      color_asignacion: await pickResponsibleColor(trx, eventId),
     });
-    await trx('responsables').insert({ evento_id: eventId, personal_id: videographer, rol: 'Videógrafo' });
+    await trx('responsables').insert({
+      evento_id: eventId, personal_id: videographer, rol: 'Videógrafo',
+      color_asignacion: await pickResponsibleColor(trx, eventId),
+    });
     const equipment = await trx('equipos').whereIn('numero_serie', ['LENS-CAM-001', 'LENS-LEN-001']).pluck('id');
     await trx('asignaciones').insert(equipment.map(equipo_id => ({ responsable_id, equipo_id })));
     await marker.delete();

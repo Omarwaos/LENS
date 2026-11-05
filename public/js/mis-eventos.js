@@ -1,4 +1,5 @@
 import { bindLogout, homeFor, redirectIfSignedOut, request } from './session.js';
+import { assignmentColorClass } from './assignment-colors.js';
 
 const list = document.querySelector('#event-list');
 const errorText = document.querySelector('#session-error');
@@ -13,12 +14,15 @@ function element(tag, value, className) {
   return node;
 }
 
-function renderEvent(event) {
+function renderEvent(event, user) {
   const card = element('article', '', 'panel worker-event');
   const tones = { Programado: 'blue', Finalizado: 'green', Cancelado: 'red' };
   const header = element('header', '', 'worker-event-header');
   const title = element('div');
   title.append(element('h2', event.nombre), element('p', `${event.tipo} · ${event.rol}`));
+  // Reutiliza el color guardado en la asignación, igual que en el panel del administrador.
+  const colorClass = assignmentColorClass(event.color_asignacion);
+  title.append(element('span', `${user.nombres} ${user.apellidos}`, `assignment-person ${colorClass}`));
   header.append(title, element('span', event.estado, `badge ${tones[event.estado]}`));
 
   const details = element('dl', '', 'worker-details');
@@ -40,7 +44,7 @@ function renderEvent(event) {
     const equipment = element('ul');
     for (const item of event.equipos) {
       const [status, tone] = item.devuelto_en ? ['Devuelto', 'green'] : item.entregado_en ? ['Entregado', 'blue'] : ['Reservado', 'amber'];
-      const asset = element('li');
+      const asset = element('li', '', `worker-assigned-equipment ${colorClass}`);
       const name = element('div');
       name.append(element('strong', `${item.marca} ${item.modelo}`), element('small', item.numero_serie));
       asset.append(name, element('span', status, `badge ${tone}`));
@@ -69,7 +73,7 @@ async function load() {
     document.querySelector('#worker-name').textContent = `${user.nombres} ${user.apellidos}`;
     const events = await request('mis-eventos');
     list.replaceChildren(...(events.length
-      ? events.map(renderEvent)
+      ? events.map(event => renderEvent(event, user))
       : [element('p', 'Todavía no tienes eventos asignados.', 'empty')]));
   } catch (error) {
     if (redirectIfSignedOut(error)) return;

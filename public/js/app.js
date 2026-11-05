@@ -1,10 +1,22 @@
 import { bindLogout, homeFor, redirectIfSignedOut, request } from './session.js';
 import { $, icon, empty } from './panel-ui.js';
-import { data, view, views, detailId, nextEvents, setData, setView, setSearch, setFilter, setDetailId } from './panel-state.js';
+import {
+  data,
+  view,
+  views,
+  detailId,
+  nextEvents,
+  setData,
+  setView,
+  setSearch,
+  setFilter,
+  setDetailId,
+  setEventSection,
+} from './panel-state.js';
 import { dashboard } from './dashboard.js';
 import { listPage, listContent } from './resource-list.js';
-import { showEditor, showMovement, confirmDelete } from './panel-dialogs.js';
-import { renderDetail } from './event-detail.js';
+import { showEditor, showMovement, confirmDelete, confirmEventCreation } from './panel-dialogs.js';
+import { eventDetail } from './event-detail.js';
 
 let toastTimeout;
 
@@ -26,7 +38,6 @@ function toast(message, error = false) {
 async function refresh() {
   setData(await api('datos'));
   render();
-  if ($('#detail').open && detailId) renderDetail();
 }
 
 function render() {
@@ -51,7 +62,8 @@ function render() {
       `,
     )
     .join('');
-  $('#main').innerHTML = view === 'inicio' ? dashboard() : listPage();
+  // La ficha ocupa la página. Los formularios de edición conservan sus diálogos.
+  $('#main').innerHTML = detailId ? eventDetail() : view === 'inicio' ? dashboard() : listPage();
 }
 
 // Mueve el foco al contenido sin cambiar el fragmento que selecciona la vista.
@@ -75,9 +87,7 @@ document.addEventListener('click', event => {
   if (el.dataset.action === 'edit') showEditor(entity, id);
   if (el.dataset.action === 'delete') confirmDelete(entity, id);
   if (el.dataset.action === 'detail') {
-    setDetailId(id);
-    renderDetail();
-    $('#detail').showModal();
+    location.hash = `eventos/${id}`;
   }
   if (el.dataset.action === 'movement') showMovement(id, el.dataset.movement);
   if (el.dataset.action === 'retry') load();
@@ -86,18 +96,29 @@ document.addEventListener('click', event => {
 // Envía el formulario a la API y actualiza el panel al terminar.
 document.addEventListener('submit', async event => {
   const form = event.target;
-  if (!form.matches('#entity-form,#movement-form,#delete-form,[data-assign]')) return;
+  if (!form.matches('#entity-form,#create-event-form,#movement-form,#delete-form,[data-assign]')) return;
   event.preventDefault();
   const button = form.querySelector('[type="submit"]');
   if (button.disabled) return;
   const payload = Object.fromEntries(new FormData(form));
-  for (const key of Object.keys(payload)) if (key.endsWith('_id')) payload[key] = Number(payload[key]);
+  for (const key of Object.keys(payload))
+    if (key.endsWith('_id')) payload[key] = Number(payload[key]);
   const error = form.querySelector('.form-error');
   error.textContent = '';
+  // Crear un evento requiere revisar el resumen antes de enviar la solicitud a la API.
+  if (form.id === 'entity-form' && form.dataset.entity === 'eventos' && !form.dataset.id) {
+    confirmEventCreation(payload);
+    return;
+  }
   button.disabled = true;
   let message = 'Cambios guardados.';
   try {
-    if (form.id === 'entity-form') {
+    if (form.id === 'create-event-form') {
+      await api('eventos', 'POST', payload);
+      $('#confirmation').close();
+      $('#editor').close();
+      message = 'Evento creado.';
+    } else if (form.id === 'entity-form') {
       await api(
         form.dataset.entity + (form.dataset.id ? `/${form.dataset.id}` : ''),
         form.dataset.id ? 'PUT' : 'POST',
@@ -112,7 +133,8 @@ document.addEventListener('submit', async event => {
     } else if (form.id === 'movement-form') {
       await api(`asignaciones/${form.dataset.id}/${form.dataset.movement}`, 'POST', payload);
       $('#editor').close();
-      message = form.dataset.movement === 'entregar' ? 'Entrega registrada.' : 'Devolución registrada.';
+      message =
+        form.dataset.movement === 'entregar' ? 'Entrega registrada.' : 'Devolución registrada.';
     } else {
       if (form.dataset.assign === 'responsables') payload.evento_id = detailId;
       await api(form.dataset.assign, 'POST', payload);
@@ -147,8 +169,20 @@ document.addEventListener('change', event => {
 
 // Navegación por la URL y carga inicial según la sesión.
 function navigate() {
-  setView(Object.hasOwn(views, location.hash.slice(1)) ? location.hash.slice(1) : 'inicio');
-  if (data) render();
+  const route = location.hash.slice(1);
+  const match = route.match(/^eventos\/(\d+)$/);
+  setDetailId(match ? Number(match[1]) : null);
+  if (match || ['eventos', 'historial', 'cancelados'].includes(route)) {
+    setView('eventos');
+    if (!match) setEventSection(route === 'eventos' ? 'programados' : route);
+  } else {
+    setView(Object.hasOwn(views, route) ? route : 'inicio');
+  }
+  if (data) {
+    render();
+    $('#main').focus();
+    window.scrollTo({ top: 0 });
+  }
 }
 window.addEventListener('hashchange', navigate);
 bindLogout($('#logout'), message => toast(message, true));

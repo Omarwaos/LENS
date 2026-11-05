@@ -23,6 +23,10 @@ async function start() {
     if (!ready || !await db.schema.hasTable('sesiones')) {
       throw new Error('La base de datos todavía no está preparada.');
     }
+    // Exige la migración antes de aceptar nuevas asignaciones con color.
+    if (!await db.schema.hasColumn('responsables', 'color_asignacion')) {
+      throw new Error('Falta la migración de colores de responsables.');
+    }
     const server = createLensServer(db);
     server.once('close', () => void db.destroy());
     server.once('error', error => {

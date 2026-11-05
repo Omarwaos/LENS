@@ -1,0 +1,89 @@
+/* Diez colores para identificar personas. El nombre y el estado siguen visibles. */
+.assignment-color-0 {
+  --assignment-ink: #3155b7;
+  --assignment-soft: #edf2ff;
+}
+.assignment-color-1 {
+  --assignment-ink: #246c50;
+  --assignment-soft: #eaf6ef;
+}
+.assignment-color-2 {
+  --assignment-ink: #884a16;
+  --assignment-soft: #fff1e3;
+}
+.assignment-color-3 {
+  --assignment-ink: #7541a1;
+  --assignment-soft: #f4ecfc;
+}
+.assignment-color-4 {
+  --assignment-ink: #a23267;
+  --assignment-soft: #fcebf3;
+}
+.assignment-color-5 {
+  --assignment-ink: #136875;
+  --assignment-soft: #e5f5f8;
+}
+.assignment-color-6 {
+  --assignment-ink: #8e3540;
+  --assignment-soft: #fcebed;
+}
+.assignment-color-7 {
+  --assignment-ink: #656718;
+  --assignment-soft: #f4f5df;
+}
+.assignment-color-8 {
+  --assignment-ink: #674d3f;
+  --assignment-soft: #f4eee8;
+}
+.assignment-color-9 {
+  --assignment-ink: #3f5569;
+  --assignment-soft: #eaf0f5;
+}
+
+/* El mismo borde une visualmente a cada responsable con sus equipos. */
+.responsible-row.assignment-color,
+.loan-item.assignment-color,
+.worker-assigned-equipment.assignment-color {
+  border-inline-start: 4px solid var(--assignment-ink);
+  padding-inline-start: 12px;
+}
+
+.responsible-row.assignment-color .avatar {
+  color: var(--assignment-ink);
+  background: var(--assignment-soft);
+}
+
+.assignment-person {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 6px;
+  color: var(--assignment-ink);
+  background: var(--assignment-soft);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.assignment-person::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--assignment-ink);
+}
+
+.assignment-owner {
+  margin-top: 5px;
+}
+
+.worker-event-header .assignment-person {
+  margin-top: 8px;
+}
+
+.worker-equipment li.worker-assigned-equipment {
+  margin-top: 8px;
+  padding-inline-start: 12px;
+}

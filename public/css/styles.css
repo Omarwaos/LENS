@@ -7,3 +7,7 @@
 @import url('./dialogs.css');
 @import url('./event-detail.css');
 @import url('./responsive.css');
+/* Diseño del panel de administración y navegación adaptada a móviles. */
+@import url('./admin-ui.css');
+/* Identificación persistente del responsable de cada equipo. */
+@import url('./assignment-colors.css');

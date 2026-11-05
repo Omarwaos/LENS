@@ -1,0 +1,604 @@
+/* Panel de administración. Mantiene el azul y los tonos claros de LENS. */
+.admin-page {
+  color: #1d2d45;
+  background: #f6f8fc;
+  font-size: 14px;
+}
+
+.admin-page .sidebar {
+  width: 208px;
+  padding: 28px 16px 22px;
+}
+
+.admin-page .brand {
+  margin: 0 6px 28px;
+  gap: 10px;
+}
+
+.admin-page .brand img {
+  width: 32px;
+  height: 32px;
+}
+
+.admin-page .brand > span {
+  font-size: 24px;
+}
+
+.admin-page .brand small {
+  font-size: 10px;
+  letter-spacing: 0.3px;
+}
+
+.admin-page .workspace {
+  padding: 0 4px 22px;
+}
+
+.admin-page .workspace strong {
+  font-size: 12px;
+}
+
+.admin-page .workspace div > span {
+  font-size: 11px;
+}
+
+.admin-page .nav-label {
+  font-size: 10px;
+}
+
+.admin-page .nav-link {
+  font-size: 13px;
+  padding: 12px;
+}
+
+.admin-page .sidebar-bottom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 0 0;
+  border-top: 1px solid #2c3b53;
+}
+
+.admin-page .sidebar-bottom strong,
+.admin-page .sidebar-bottom p {
+  font-size: 12px;
+}
+
+.admin-page .sidebar-bottom p {
+  margin: 2px 0 0;
+  color: #a4b2c9;
+}
+
+.admin-page .app-shell {
+  margin-left: 208px;
+}
+
+.admin-page .topbar {
+  min-height: 72px;
+  height: auto;
+  padding: 14px 30px;
+  gap: 12px;
+}
+
+.mobile-brand {
+  display: none;
+}
+
+.admin-page main {
+  max-width: 1120px;
+  padding: 30px;
+}
+
+.admin-page .breadcrumb,
+.admin-page .footer {
+  font-size: 12px;
+  color: #566984;
+}
+
+.admin-page h1 {
+  font-size: 28px;
+}
+
+.admin-page .page-heading {
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.admin-page .page-heading p {
+  font-size: 13px;
+  color: #566984;
+  max-width: none;
+}
+
+.admin-page .eyebrow {
+  font-size: 11px;
+  color: #566984;
+}
+
+.admin-page .button {
+  min-height: 42px;
+  font-size: 13px;
+  padding: 10px 14px;
+}
+
+.admin-page .icon-button {
+  width: 38px;
+  height: 38px;
+}
+
+.admin-page .badge {
+  font-size: 11px;
+  padding: 4px 7px;
+}
+
+.admin-page .metrics {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 24px;
+}
+
+.admin-page .metric {
+  padding: 17px;
+}
+
+.admin-page .metric-top,
+.admin-page .metric-caption {
+  font-size: 12px;
+  color: #566984;
+}
+
+/* La agenda y el inicio usan la misma fila para mostrar cada evento. */
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 24px 0 12px;
+}
+
+.production-event {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.production-event:last-child {
+  border-bottom: 0;
+}
+
+.production-event .date-tile {
+  width: 48px;
+  min-width: 0;
+}
+
+.production-event-info {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.event-title-line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.event-title-line h2 {
+  font-size: 16px;
+}
+
+.production-event-info > p {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #566984;
+}
+
+.production-event-actions {
+  display: grid;
+  justify-items: end;
+  gap: 6px;
+}
+
+.event-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.event-tabs span {
+  opacity: 0.85;
+}
+
+.production-tasks {
+  display: grid;
+  gap: 12px;
+}
+
+.production-task {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.production-task > div {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.production-task h3 {
+  font-size: 14px;
+}
+
+.production-task p {
+  color: #566984;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.task-icon {
+  color: var(--primary);
+}
+
+/* La ficha de un evento ocupa el contenido principal y permite enlazar su historial. */
+.detail-back {
+  margin-bottom: 14px;
+}
+
+.detail-back .icon {
+  transform: rotate(180deg);
+}
+
+.production-banner {
+  padding: 22px;
+  background: #152135;
+  border-radius: 12px 12px 0 0;
+  color: #fff;
+}
+
+.production-banner .eyebrow {
+  color: #b9c9e6;
+}
+
+.production-banner p {
+  color: #c3d1e8;
+  margin-top: 7px;
+}
+
+.admin-page .detail-intro {
+  padding: 16px 22px;
+  border-radius: 0 0 12px 12px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 13px;
+  color: #566984;
+  margin-bottom: 20px;
+}
+
+.production-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.admin-page .production-detail-grid .detail-section {
+  padding: 20px;
+}
+
+.admin-page .section-title h3 {
+  font-size: 15px;
+}
+
+.admin-page .assignment-row {
+  flex-wrap: wrap;
+}
+
+.admin-page .assignment-name strong {
+  font-size: 13px;
+}
+
+.admin-page .assignment-name p {
+  font-size: 12px;
+  color: #566984;
+}
+
+.admin-page .loan-history {
+  padding-left: 0;
+  font-size: 12px;
+  color: #566984;
+  gap: 8px;
+}
+
+.admin-page .inline-form {
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.admin-page .field {
+  font-size: 13px;
+}
+
+.admin-page input,
+.admin-page select,
+.admin-page textarea {
+  font-size: 13px;
+}
+
+.admin-page .inline-form .button {
+  width: 100%;
+}
+
+.history-notice {
+  padding: 14px 18px;
+  color: #246e56;
+  background: #eaf6f0;
+  border-radius: 9px;
+  margin-bottom: 18px;
+}
+
+.event-detail-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.admin-page .detail-note {
+  margin-top: 18px;
+  padding: 18px;
+  background: #fff;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #566984;
+}
+
+/* Los controles del inventario y del personal conservan sus formularios de edición. */
+.admin-page .cards-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.admin-page .search-box input,
+.admin-page .toolbar select,
+.admin-page td,
+.admin-page .person-card > p {
+  font-size: 13px;
+}
+
+.admin-page th,
+.admin-page td small,
+.admin-page .person-data,
+.admin-page .result-count {
+  font-size: 12px;
+}
+
+.admin-page .person-data {
+  color: #566984;
+}
+
+/* En móvil la navegación queda al alcance del pulgar y el contenido se apila. */
+@media (max-width: 760px) {
+  .admin-page .sidebar {
+    position: fixed;
+    inset: auto 0 0;
+    width: 100%;
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+    background: #152135;
+    z-index: 5;
+  }
+
+  .admin-page .brand,
+  .admin-page .workspace,
+  .admin-page .nav-label,
+  .admin-page .sidebar-bottom {
+    display: none;
+  }
+
+  .admin-page #navigation {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+  }
+
+  .admin-page .nav-link {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: 5px;
+    margin: 0;
+    padding: 8px 3px;
+    font-size: 12px;
+    min-height: 56px;
+  }
+
+  .admin-page .nav-count {
+    display: none;
+  }
+
+  .admin-page .app-shell {
+    margin-left: 0;
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+
+  .admin-page .topbar {
+    background: #355de5;
+    color: #fff;
+    padding: 14px 17px;
+  }
+
+  .admin-page .breadcrumb {
+    display: none;
+  }
+
+  .admin-page .mobile-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 19px;
+    font-weight: 650;
+    letter-spacing: 2px;
+  }
+
+  .admin-page .topbar .button {
+    background: #ffffff1a;
+    color: #fff;
+    border-color: #ffffff73;
+  }
+
+  .admin-page main {
+    padding: 24px 16px;
+  }
+
+  .admin-page h1 {
+    font-size: 25px;
+  }
+
+  .admin-page .page-heading {
+    display: grid;
+    gap: 16px;
+  }
+
+  .admin-page .page-heading > .button {
+    width: 100%;
+  }
+
+  .admin-page .metrics {
+    gap: 7px;
+  }
+
+  .admin-page .metric {
+    padding: 12px 10px;
+  }
+
+  .admin-page .metric-top {
+    font-size: 11px;
+  }
+
+  .admin-page .metric-icon {
+    display: none;
+  }
+
+  .admin-page .metric-value {
+    font-size: 26px;
+  }
+
+  .admin-page .metric-caption {
+    font-size: 11px;
+  }
+
+  .production-event {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 12px;
+    padding: 17px 14px;
+  }
+
+  .production-event .date-tile {
+    width: 42px;
+  }
+
+  .production-event-actions {
+    grid-column: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .admin-page .button,
+  .admin-page .icon-button {
+    min-height: 44px;
+  }
+
+  .production-task {
+    flex-wrap: wrap;
+    padding: 16px;
+  }
+
+  .production-task > .button {
+    margin-left: 33px;
+  }
+
+  .production-detail-grid,
+  .admin-page .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-page .production-detail-grid .detail-section {
+    padding: 17px;
+  }
+
+  .admin-page .loan-item .assignment-row > .button {
+    margin-left: 0;
+  }
+
+  .admin-page .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-page .search-box {
+    max-width: none;
+  }
+
+  .admin-page .toolbar select {
+    width: 100%;
+  }
+
+  .admin-page input,
+  .admin-page select,
+  .admin-page textarea {
+    font-size: 16px;
+  }
+
+  .admin-page .footer {
+    padding: 16px;
+    flex-wrap: wrap;
+  }
+
+  .admin-page .toast {
+    bottom: calc(95px + env(safe-area-inset-bottom));
+  }
+
+  /* Cada fila del inventario se transforma en una ficha legible sin desplazamiento lateral. */
+  .admin-page .table-wrapper table,
+  .admin-page .table-wrapper tbody,
+  .admin-page .table-wrapper tr,
+  .admin-page .table-wrapper td {
+    display: block;
+    white-space: normal;
+    width: 100%;
+  }
+
+  .admin-page .table-wrapper thead {
+    display: none;
+  }
+
+  .admin-page .table-wrapper tr {
+    padding: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .admin-page .table-wrapper td {
+    padding: 7px 0;
+    border: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .admin-page .table-wrapper td[data-label]::before {
+    content: attr(data-label) ' · ';
+    color: #566984;
+  }
+
+  .admin-page .table-wrapper .row-actions {
+    justify-content: flex-start;
+  }
+}

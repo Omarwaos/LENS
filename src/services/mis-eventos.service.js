@@ -5,7 +5,7 @@ export function listWorkerEvents(db, personalId) {
       .join('tipos_evento as t', 't.id', 'e.tipo_evento_id')
       .where('r.personal_id', personalId)
       .select('e.id', 'e.nombre', 'e.inicio', 'e.fin', 'e.direccion', 'e.descripcion', 'e.estado',
-        't.nombre as tipo', 'r.rol')
+        't.nombre as tipo', 'r.rol', 'r.color_asignacion')
       .orderBy('e.inicio');
 
     const equipment = await trx('responsables as r')

@@ -118,3 +118,24 @@ textarea {
   line-height: 1.8;
 }
 
+
+/* Resumen de solo lectura que precede a la creación de un evento. */
+.event-confirm-summary {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.event-confirm-summary dt {
+  color: #60728e;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.event-confirm-summary dd {
+  margin: 3px 0 0;
+  color: #1d2d45;
+  font-size: 13px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

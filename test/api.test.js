@@ -264,6 +264,7 @@ test('El trabajador solo lee sus eventos y sus equipos, y la API bloquea operaci
   assert.equal(Object.hasOwn(user, 'clave_acceso'), false);
   const events = await api.request('mis-eventos', 'GET', undefined, 200, cookie);
   assert.deepEqual(events.map(item => item.id), [own.ev.id]);
+  assert.equal(events[0].color_asignacion, own.r.color_asignacion);
   assert.deepEqual(events[0].equipos.map(item => item.numero_serie), [own.eq.numero_serie]);
 
   for (const path of ['datos', 'personal', 'equipos', 'eventos', `eventos/${privateEvent.id}`, 'responsables', 'asignaciones']) {
@@ -280,4 +281,50 @@ test('El trabajador solo lee sus eventos y sus equipos, y la API bloquea operaci
   const nextCookie = await api.login('trabajador');
   await api.db('usuarios').where('nombre_usuario', 'trabajador').update({ estado: false });
   await api.request('mis-eventos', 'GET', undefined, 401, nextCookie);
+});
+
+test('Los responsables reciben diez colores distintos aunque se asignen al mismo tiempo', async t => {
+  const api = await setup(t);
+  const coverage = await api.create('eventos', event());
+  const people = [];
+  for (let index = 0; index < 11; index++) {
+    people.push(await api.create('personal', person({ documento: 'COLOR-' + index })));
+  }
+
+  // Las solicitudes paralelas deben consultar los colores dentro de la transacción.
+  const assigned = await Promise.all(people.slice(0, 10).map(worker => api.create('responsables', {
+    evento_id: coverage.id, personal_id: worker.id, rol: 'Producción',
+  })));
+  assert.equal(new Set(assigned.map(record => record.color_asignacion)).size, 10);
+  assert.ok(assigned.every(record => Number.isInteger(record.color_asignacion) &&
+    record.color_asignacion >= 0 && record.color_asignacion < 10));
+
+  const extra = await api.create('responsables', {
+    evento_id: coverage.id, personal_id: people[10].id, rol: 'Asistencia',
+  });
+  assert.ok(assigned.some(record => record.color_asignacion === extra.color_asignacion));
+
+  const stored = await api.request('responsables');
+  assert.deepEqual(stored.map(({ id, color_asignacion }) => ({ id, color_asignacion })),
+    [...assigned, extra].sort((a, b) => a.id - b.id).map(({ id, color_asignacion }) => ({ id, color_asignacion })));
+});
+
+test('La migración añade colores a las asignaciones anteriores conservando sus relaciones', async t => {
+  const api = await setup(t);
+  const fixture = await fixtures(api);
+  const secondPerson = await api.create('personal', person({ documento: 'COLOR-LEGACY' }));
+
+  // Simula la estructura anterior y conserva una asignación de equipo ya existente.
+  await api.db.migrate.down({ name: '003_colores_responsables.js' });
+  await api.db('responsables').insert({
+    evento_id: fixture.ev.id, personal_id: secondPerson.id, rol: 'Asistencia',
+  });
+  const previous = await api.db('responsables').orderBy('id');
+  const loansBefore = await api.db('asignaciones').orderBy('id');
+
+  await api.db.migrate.latest();
+  const current = await api.db('responsables').orderBy('id');
+  assert.equal(new Set(current.map(record => record.color_asignacion)).size, 2);
+  assert.deepEqual(current.map(({ color_asignacion, ...record }) => record), previous);
+  assert.deepEqual(await api.db('asignaciones').orderBy('id'), loansBefore);
 });

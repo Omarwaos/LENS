@@ -1,25 +1,34 @@
-import { $, escape, icon, dayText, timeText, initials, fullName, equipmentIcon, badge, empty, actionButton } from './panel-ui.js';
-import { data, detailId, setDetailId, personFor, responsibleFor, roster, loans } from './panel-state.js';
+import {
+  escape,
+  icon,
+  dayText,
+  timeText,
+  initials,
+  fullName,
+  equipmentIcon,
+  badge,
+  empty,
+  actionButton,
+} from './panel-ui.js';
+import { data, detailId, personFor, responsibleFor, roster, loans } from './panel-state.js';
 import { field, select } from './panel-dialogs.js';
+import { assignmentColorClass } from './assignment-colors.js';
 
-// Cuadro Gestionar. Muestra responsables, reservas e historial de movimientos.
+// Ficha del evento. El historial reutiliza los movimientos registrados y sus condiciones. Muestra responsables, reservas e historial de movimientos.
 function equipmentLoanRow(assignment, editable, removable) {
   const eq = data.equipos.find(e => e.id === assignment.equipo_id);
   const responsible = responsibleFor(assignment);
   return `
-    <div class="loan-item">
+    <div class="loan-item ${assignmentColorClass(responsible.color_asignacion)}">
       <div class="assignment-row">
         <span class="asset-icon">${icon(equipmentIcon(eq))}</span>
         <div class="assignment-name">
           <strong>${escape(eq.modelo)}</strong>
-          <p>${escape(eq.numero_serie)} · ${escape(fullName(personFor(responsible)))}</p>
+          <p>${escape(eq.numero_serie)}</p>
+          <div class="assignment-owner"><span class="assignment-person">${escape(fullName(personFor(responsible)))}</span></div>
         </div>
         ${badge(
-          assignment.devuelto_en
-            ? 'Devuelto'
-            : assignment.entregado_en
-              ? 'Entregado'
-              : 'Reservado',
+          assignment.devuelto_en ? 'Devuelto' : assignment.entregado_en ? 'Entregado' : 'Reservado',
           assignment.devuelto_en ? 'green' : assignment.entregado_en ? 'amber' : 'blue',
         )}${
           editable
@@ -105,7 +114,7 @@ function equipmentLoanRow(assignment, editable, removable) {
 
 function responsibleRow(responsible, removable) {
   return `
-    <div class="assignment-row">
+    <div class="assignment-row responsible-row ${assignmentColorClass(responsible.color_asignacion)}">
       <span class="avatar">${initials(personFor(responsible))}</span>
       <div class="assignment-name">
         <strong>${escape(fullName(personFor(responsible)))}</strong>
@@ -126,12 +135,14 @@ function responsibleRow(responsible, removable) {
   `;
 }
 
-export function renderDetail() {
+export function eventDetail() {
   const event = data.eventos.find(e => e.id === detailId);
   if (!event) {
-    $('#detail').close();
-    setDetailId(null);
-    return;
+    return empty(
+      'El evento ya no existe',
+      'Vuelve al listado para consultar otra cobertura.',
+      '<a class="button secondary" href="#eventos">Volver a eventos</a>',
+    );
   }
   const staff = roster(event.id),
     assignments = loans(event.id),
@@ -143,16 +154,21 @@ export function renderDetail() {
   const equipmentOptions = data.equipos
     .filter(e => e.estado === 'Operativo' && !assignments.some(a => a.equipo_id === e.id))
     .map(e => [e.id, `${e.modelo} · ${e.numero_serie}`]);
-  $('#detail').innerHTML = `
-    <header class="dialog-header">
+  const back =
+    event.estado === 'Finalizado'
+      ? 'historial'
+      : event.estado === 'Cancelado'
+        ? 'cancelados'
+        : 'eventos';
+  return `
+    <a class="button ghost detail-back" href="#${back}">${icon('arrow')} Volver a eventos</a>
+    <header class="production-banner">
       <div>
         <div class="eyebrow">${escape(event.tipo)} · ${escape(event.estado)}</div>
-        <h2 id="detail-title">${escape(event.nombre)}</h2>
+        <h1 id="detail-title">${escape(event.nombre)}</h1>
         <p>Personal, equipos y control de movimientos.</p>
       </div>
-      <button class="icon-button" data-close="detail" aria-label="Cerrar evento">
-        ${icon('close')}
-      </button>
+
     </header>
     <div class="detail-intro">
       <span>${icon('calendar')}${dayText(event.inicio)}</span>
@@ -164,7 +180,9 @@ export function renderDetail() {
       </span>
       <span>${icon('pin')}${escape(event.direccion)}</span>
     </div>
-    <section class="detail-section">
+    ${event.estado === 'Finalizado' ? '<p class="history-notice">Evento finalizado. Consulta el personal, los equipos y los movimientos registrados.</p>' : ''}
+    <div class="production-detail-grid">
+    <section class="detail-section panel">
       <div class="section-title">
         ${icon('users')}
         <h3>Personal responsable</h3>
@@ -173,7 +191,12 @@ export function renderDetail() {
       ${
         staff.length
           ? staff.map(responsible => responsibleRow(responsible, removable)).join('')
-          : empty('Asigna a tu equipo', 'Selecciona quién participará y qué función cumplirá.', '', true)
+          : empty(
+              'Asigna a tu equipo',
+              'Selecciona quién participará y qué función cumplirá.',
+              '',
+              true,
+            )
       }
       ${
         editable && peopleOptions.length
@@ -194,7 +217,7 @@ export function renderDetail() {
           : ''
       }
     </section>
-    <section class="detail-section">
+    <section class="detail-section panel">
       <div class="section-title">
         ${icon('camera')}
         <h3>Equipos y movimientos</h3>
@@ -202,7 +225,9 @@ export function renderDetail() {
       </div>
       ${
         assignments.length
-          ? assignments.map(assignment => equipmentLoanRow(assignment, editable, removable)).join('')
+          ? assignments
+              .map(assignment => equipmentLoanRow(assignment, editable, removable))
+              .join('')
           : empty(
               'Prepara el equipamiento',
               staff.length
@@ -230,6 +255,7 @@ export function renderDetail() {
           : ''
       }
     </section>
+    </div>
     ${
       event.descripcion
         ? `
@@ -240,8 +266,8 @@ export function renderDetail() {
         `
         : ''
     }
-    <footer class="dialog-footer">
-      <button class="button secondary" data-close="detail">Cerrar</button>
+    <footer class="event-detail-footer">
+      <a class="button secondary" href="#${back}">Volver a eventos</a>
       <button class="button primary" data-action="edit" data-entity="eventos" data-id="${event.id}">
         Editar evento
       </button>

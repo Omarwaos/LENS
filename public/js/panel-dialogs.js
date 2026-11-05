@@ -1,4 +1,4 @@
-import { $, escape, icon, fullName } from './panel-ui.js';
+import { $, escape, icon, fullName, dayText, timeText } from './panel-ui.js';
 import { data } from './panel-state.js';
 
 // Campos y formularios para crear o editar registros.
@@ -218,3 +218,51 @@ export function confirmDelete(entity, id) {
   `;
   $('#confirmation').showModal();
 }
+
+// El formulario original permanece abierto debajo para poder volver y corregir sus datos.
+export function confirmEventCreation(payload) {
+  const type = data.catalogos.tipos_evento.find(item => item.id === payload.tipo_evento_id);
+  const start = payload.inicio + ':00-05:00';
+  const end = payload.fin + ':00-05:00';
+  const summary = [
+    ['Evento', payload.nombre],
+    ['Tipo de evento', type?.nombre || 'Sin tipo'],
+    ['Inicio', dayText(start) + ' · ' + timeText(start)],
+    ['Fin', dayText(end) + ' · ' + timeText(end)],
+    ['Lugar', payload.direccion],
+    ['Estado', payload.estado],
+    ['Notas de producción', payload.descripcion || 'Sin notas'],
+  ];
+
+  // Los campos ocultos conservan exactamente los datos revisados hasta la confirmación final.
+  $('#confirmation').innerHTML = `
+    <form id="create-event-form">
+      <header class="dialog-header">
+        <div>
+          <h2 id="confirm-title">Confirmar nuevo evento</h2>
+          <p>Revisa los datos antes de crear la cobertura.</p>
+        </div>
+        <button type="button" class="icon-button" data-close="confirmation" aria-label="Volver al formulario">
+          ${icon('close')}
+        </button>
+      </header>
+      <div class="dialog-body">
+        <div class="form-error" role="alert"></div>
+        <dl class="event-confirm-summary">
+          ${summary.map(([label, value]) => `
+            <div><dt>${escape(label)}</dt><dd>${escape(value)}</dd></div>
+          `).join('')}
+        </dl>
+        ${Object.entries(payload).map(([name, value]) => `
+          <input type="hidden" name="${escape(name)}" value="${escape(value)}">
+        `).join('')}
+      </div>
+      <footer class="dialog-footer">
+        <button type="button" class="button secondary" data-close="confirmation">Volver a revisar</button>
+        <button class="button primary" type="submit">Confirmar y crear</button>
+      </footer>
+    </form>
+  `;
+  $('#confirmation').showModal();
+}
+

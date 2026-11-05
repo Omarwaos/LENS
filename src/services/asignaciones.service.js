@@ -1,6 +1,7 @@
 import { editableEvent, equipmentAvailable, equiposPorEvento, personAvailable } from './disponibilidad.js';
 import { fail, getRecord, idValue, text } from './registros.js';
 import { writeTransaction } from './transaction.js';
+import { pickResponsibleColor } from './colores.js';
 
 export function createAssignmentService(db) {
   return {
@@ -13,6 +14,8 @@ export function createAssignmentService(db) {
           evento_id: event.id,
           personal_id,
           rol: text(body.rol, 'Rol', 80),
+          // Se guarda dentro de la transacción que serializa las asignaciones del evento.
+          color_asignacion: await pickResponsibleColor(trx, event.id),
         });
         return getRecord(trx, 'responsables', id);
       });
