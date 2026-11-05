@@ -1,0 +1,87 @@
+/* Botones de acción y variantes de color, tamaño e icono. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 8px;
+  padding: 10px 16px;
+  min-height: 40px;
+  white-space: nowrap;
+  font-weight: 550;
+  font-size: 12px;
+  transition: background .15s;
+  line-height: 1.4;
+}
+
+.button .icon {
+  width: 17px;
+  height: 17px;
+}
+
+.button.primary {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 3px 7px #355de51a;
+}
+
+.button.primary:hover {
+  background: #284dca;
+}
+
+.button.secondary {
+  border: 1px solid #dce3ef;
+  background: white;
+  color: #53637e;
+}
+
+.button.secondary:hover {
+  background: #f5f7fc;
+}
+
+.button.ghost {
+  background: transparent;
+  color: #526bb7;
+}
+
+.button.ghost:hover {
+  background: #edf2ff;
+}
+
+.button.danger {
+  background: #c84154;
+  color: white;
+}
+
+.button.compact {
+  padding: 7px 10px;
+  min-height: 32px;
+  font-size: 11px;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  color: #8c99ad;
+  border-radius: 6px;
+}
+
+.icon-button:hover {
+  background: #eef2fa;
+  color: #355de5;
+}
+
+.icon-button.delete:hover {
+  color: #bd4052;
+  background: #fff0f2;
+}
+
+.icon-button .icon {
+  width: 16px;
+  height: 16px;
+}
+

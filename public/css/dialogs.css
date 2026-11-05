@@ -1,0 +1,120 @@
+/* Ventanas modales y fondo oscurecido. La altura máxima deja espacio para el desplazamiento interno. */
+dialog {
+  border: 1px solid #e2e8f1;
+  border-radius: 16px;
+  width: min(590px,calc(100% - 32px));
+  padding: 0;
+  color: var(--ink);
+  max-height: 90vh;
+  box-shadow: 0 24px 100px #15213533;
+}
+
+dialog::backdrop {
+  background: #13213b73;
+  backdrop-filter: blur(3px);
+}
+
+.dialog-header {
+  padding: 23px 26px 19px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+  border-bottom: 1px solid var(--line);
+}
+
+.dialog-header h2 {
+  font-size: 20px;
+}
+
+.dialog-header p {
+  font-size: 11px;
+  color: #8a98ad;
+  margin-top: 6px;
+}
+
+.dialog-body {
+  padding: 23px 26px;
+}
+
+/* Distribución, controles y mensajes de error de los formularios. */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 11px;
+  color: #60728e;
+  font-weight: 550;
+}
+
+.field.wide {
+  grid-column: 1/-1;
+}
+
+input, select, textarea {
+  width: 100%;
+  border: 1px solid #dce3ef;
+  border-radius: 7px;
+  padding: 10px 11px;
+  background: white;
+  color: #3f506a;
+  font-size: 12px;
+  min-height: 39px;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #a8b2c2;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.help-text {
+  font-size: 10px;
+  color: #8d9bb0;
+  margin-top: 13px;
+  font-weight: 400;
+}
+
+.form-error {
+  color: #b03d4b;
+  background: #fff1f2;
+  border: 1px solid #f7dadd;
+  border-radius: 7px;
+  font-size: 12px;
+  padding: 11px 13px;
+  margin-bottom: 17px;
+}
+
+.form-error:empty {
+  display: none;
+}
+
+.dialog-footer {
+  border-top: 1px solid var(--line);
+  padding: 17px 26px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  background: #fcfdff;
+}
+
+.confirm-dialog {
+  max-width: 430px;
+}
+
+.confirm-dialog .dialog-body p {
+  font-size: 13px;
+  color: #7d8ca2;
+  line-height: 1.8;
+}
+

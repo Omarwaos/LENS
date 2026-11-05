@@ -1,0 +1,402 @@
+/* Pantallas amplias con más espacio para el resumen. */
+@media (min-width: 1600px) {
+  main {
+    padding-top: 44px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: minmax(0,1fr) 340px;
+  }
+
+  .event-row {
+    padding: 28px 24px;
+  }
+
+  .metric {
+    padding: 23px;
+  }
+}
+
+/* Escritorios estrechos con una barra lateral y tarjetas más compactas. */
+@media (max-width: 1150px) {
+  .sidebar {
+    width: 215px;
+    padding-inline: 15px;
+  }
+
+  .app-shell {
+    margin-left: 215px;
+  }
+
+  main {
+    padding: 30px 27px;
+  }
+
+  .topbar {
+    padding: 0 27px;
+  }
+
+  .footer {
+    padding-inline: 27px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: minmax(0,1fr) 250px;
+    gap: 17px;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .metric {
+    padding: 16px 14px;
+  }
+
+  .metric-top {
+    font-size: 10px;
+  }
+
+  .metric-icon {
+    width: 27px;
+    height: 27px;
+  }
+
+  .metric-value {
+    font-size: 27px;
+  }
+
+  .metric-caption {
+    font-size: 9px;
+  }
+
+  .metrics {
+    gap: 12px;
+  }
+
+  .event-row {
+    padding: 20px 17px;
+    gap: 12px;
+  }
+
+  .panel-heading {
+    padding: 19px;
+  }
+
+  .event-row > .icon-button {
+    display: none;
+  }
+}
+
+/* Tabletas con el resumen en una columna. */
+@media (max-width: 930px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-aside {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 17px;
+  }
+
+  .metrics {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .metric {
+    padding: 19px;
+  }
+
+  .metric-top {
+    font-size: 11px;
+  }
+
+  .metric-caption {
+    font-size: 10px;
+  }
+
+  .quick-start p {
+    max-width: 260px;
+  }
+
+  .page-heading {
+    align-items: flex-start;
+  }
+
+  h1 {
+    font-size: 27px;
+  }
+}
+
+/* Móviles con navegación superior, tarjetas y formularios en una columna. */
+@media (max-width: 680px) {
+  .sidebar {
+    position: static;
+    width: 100%;
+    padding: 16px 18px 10px;
+    display: block;
+  }
+
+  .brand {
+    margin: 0 0 18px;
+    gap: 9px;
+  }
+
+  .brand img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .brand > span {
+    font-size: 21px;
+  }
+
+  .brand small {
+    font-size: 6px;
+    letter-spacing: 1px;
+    margin-top: 5px;
+  }
+
+  .workspace, .nav-label, .sidebar-bottom {
+    display: none;
+  }
+
+  #navigation {
+    display: flex;
+    gap: 4px;
+    justify-content: space-between;
+  }
+
+  .nav-link {
+    padding: 10px 11px;
+    margin: 0;
+    font-size: 10px;
+    gap: 7px;
+  }
+
+  .nav-link .icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .nav-count {
+    display: none;
+  }
+
+  .app-shell {
+    margin: 0;
+  }
+
+  .topbar {
+    height: 57px;
+    padding: 0 20px;
+  }
+
+  .breadcrumb {
+    font-size: 10px;
+  }
+
+  .topbar-right {
+    gap: 12px;
+  }
+
+  main {
+    padding: 25px 20px 18px;
+  }
+
+  .page-heading {
+    gap: 12px;
+    margin-bottom: 23px;
+  }
+
+  .page-heading p {
+    font-size: 11px;
+    max-width: 225px;
+  }
+
+  .page-heading .button {
+    padding: 10px 12px;
+    font-size: 11px;
+  }
+
+  .eyebrow {
+    font-size: 9px;
+    letter-spacing: .9px;
+  }
+
+  h1 {
+    font-size: 25px;
+  }
+
+  .metrics {
+    gap: 11px;
+    margin-bottom: 22px;
+  }
+
+  .metric {
+    padding: 16px;
+  }
+
+  .metric-value {
+    font-size: 28px;
+  }
+
+  .dashboard-aside {
+    grid-template-columns: 1fr;
+  }
+
+  .event-row {
+    padding: 19px 16px;
+  }
+
+  .event-title {
+    font-size: 12px;
+  }
+
+  .event-sub {
+    font-size: 9px;
+  }
+
+  .panel-heading {
+    padding: 18px 16px;
+  }
+
+  .panel-heading h2 {
+    font-size: 14px;
+  }
+
+  .panel-heading .button {
+    font-size: 10px;
+  }
+
+  .date-tile {
+    width: 46px;
+    min-width: 46px;
+    height: 57px;
+  }
+
+  .quick-start {
+    padding: 17px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .quick-start > div:nth-child(2) {
+    flex: 1;
+  }
+
+  .quick-start .button {
+    margin-left: 52px;
+    margin-top: -3px;
+  }
+
+  .footer {
+    padding: 15px 20px;
+    font-size: 8px;
+    flex-wrap: wrap;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbar {
+    align-items: stretch;
+    gap: 9px;
+    flex-direction: column;
+  }
+
+  .search-box {
+    max-width: none;
+  }
+
+  .toolbar select {
+    width: 100%;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .field.wide {
+    grid-column: auto;
+  }
+
+  .dialog-header, .dialog-body, .detail-section {
+    padding: 20px;
+  }
+
+  .dialog-footer {
+    padding: 16px 20px;
+  }
+
+  .dialog-header h2 {
+    font-size: 18px;
+  }
+
+  .inline-form {
+    grid-template-columns: 1fr;
+  }
+
+  .inline-form .form-error {
+    grid-column: auto;
+  }
+
+  .detail-intro {
+    padding: 18px 20px;
+    gap: 10px;
+  }
+
+  .assignment-row {
+    flex-wrap: wrap;
+  }
+
+  .assignment-row .assignment-name {
+    min-width: 120px;
+  }
+
+  .loan-history {
+    padding-left: 0;
+  }
+
+  .loan-item .assignment-row > .button {
+    margin-left: 49px;
+  }
+
+  .row-actions {
+    gap: 0;
+  }
+
+  .badge {
+    font-size: 9px;
+  }
+
+  .toast {
+    right: 20px;
+    bottom: 20px;
+  }
+}
+
+/* Respeta la preferencia de reducir el movimiento del sistema. */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Reserva el ancho de la barra de la página para evitar saltos al abrir un diálogo. */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Bloquea el fondo hasta que se cierre el último diálogo modal. */
+html:has(dialog:modal) {
+  overflow: hidden;
+}
+
+/* Mantiene la rueda dentro del diálogo, incluso al llegar a sus extremos. */
+dialog:modal {
+  overscroll-behavior: contain;
+}

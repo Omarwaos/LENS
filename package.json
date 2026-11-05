@@ -1,0 +1,28 @@
+{
+  "name": "lens",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Gestión local de equipos, personal y eventos audiovisuales",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test",
+    "migrate": "knex migrate:latest",
+    "seed": "knex seed:run --specific=demo.js",
+    "seed:usuarios": "knex seed:run --specific=usuarios.js"
+  },
+  "main": "src/server.js",
+  "dependencies": {
+    "bcryptjs": "3.0.3",
+    "cookie-parser": "1.4.7",
+    "express": "5.3.0",
+    "express-rate-limit": "8.7.1",
+    "jsonwebtoken": "9.0.3",
+    "knex": "3.3.0",
+    "mysql2": "3.24.6"
+  }
+}

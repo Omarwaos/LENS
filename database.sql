@@ -1,0 +1,2 @@
+CREATE DATABASE lens;
+USE lens;

@@ -1,0 +1,9 @@
+/* Punto de entrada de estilos. El orden mantiene la cascada del panel. */
+@import url('./base.css');
+@import url('./layout.css');
+@import url('./buttons.css');
+@import url('./dashboard.css');
+@import url('./resource-lists.css');
+@import url('./dialogs.css');
+@import url('./event-detail.css');
+@import url('./responsive.css');

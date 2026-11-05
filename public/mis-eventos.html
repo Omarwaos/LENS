@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LENS · Mis eventos</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/acceso.css">
+  <script type="module" src="/js/mis-eventos.js"></script>
+</head>
+<body class="worker-page">
+  <header class="worker-header">
+    <div class="worker-header-inner">
+      <div class="worker-brand">
+        <img src="/favicon.svg" alt="" width="36" height="36">
+        <div><strong>LENS</strong><span>Piero Producciones</span></div>
+      </div>
+      <div class="worker-account">
+        <span id="worker-name"></span>
+        <button id="logout" type="button" class="button worker-logout">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+  <main class="worker-main">
+    <div class="worker-heading">
+      <p class="eyebrow">Mi agenda de producción</p>
+      <h1>Mis eventos</h1>
+      <p>Consulta tu horario, tu rol y los equipos que tienes asignados.</p>
+    </div>
+    <p class="form-error" id="session-error" role="alert"></p>
+    <section id="event-list" class="worker-events" aria-label="Eventos asignados" aria-live="polite">
+      <p class="loading">Cargando tus eventos…</p>
+    </section>
+  </main>
+</body>
+</html>

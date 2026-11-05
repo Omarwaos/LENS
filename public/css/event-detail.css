@@ -1,0 +1,180 @@
+/* Cuadro Gestionar con datos del evento, responsables y movimientos de equipos. */
+.detail-dialog {
+  width: min(850px,calc(100% - 32px));
+}
+
+.detail-intro {
+  padding: 20px 26px;
+  background: #f8faff;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  font-size: 11px;
+  color: #7c8faa;
+}
+
+.detail-intro > span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.detail-intro .icon {
+  width: 15px;
+  height: 15px;
+}
+
+.detail-section {
+  padding: 24px 26px;
+  border-bottom: 1px solid var(--line);
+}
+
+.detail-section:last-child {
+  border-bottom: 0;
+}
+
+.section-title {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.section-title h3 {
+  font-size: 13px;
+}
+
+.section-title > span {
+  font-size: 10px;
+  background: #eef2fa;
+  color: #8092ae;
+  padding: 2px 7px;
+  border-radius: 5px;
+}
+
+.assignment-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #edf1f6;
+}
+
+.assignment-row .avatar {
+  width: 34px;
+  height: 34px;
+  font-size: 11px;
+  border-radius: 9px;
+}
+
+.assignment-row .assignment-name {
+  flex: 1;
+  min-width: 0;
+}
+
+.assignment-name strong {
+  font-size: 12px;
+  display: block;
+  font-weight: 550;
+}
+
+.assignment-name p {
+  font-size: 10px;
+  color: #8c9bb0;
+  margin-top: 2px;
+}
+
+.assignment-row .badge {
+  margin-left: auto;
+}
+
+.inline-form {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr) auto;
+  gap: 10px;
+  align-items: end;
+  margin-top: 18px;
+}
+
+.inline-form .button {
+  height: 39px;
+}
+
+.inline-form .form-error {
+  grid-column: 1/-1;
+  margin: 0;
+}
+
+.loan-item {
+  padding: 15px 0;
+  border-bottom: 1px solid #edf1f6;
+}
+
+.loan-item:last-child {
+  border-bottom: 0;
+}
+
+.loan-item .assignment-row {
+  padding: 0;
+  border: 0;
+}
+
+.loan-history {
+  font-size: 10px;
+  color: #8191a7;
+  padding: 9px 0 0 49px;
+  display: grid;
+  gap: 4px;
+  overflow-wrap: anywhere;
+}
+
+.loan-history strong {
+  font-weight: 500;
+  color: #5d718c;
+}
+
+.detail-note {
+  font-size: 11px;
+  color: #8091ac;
+  line-height: 1.7;
+  padding: 0 26px 19px;
+}
+
+/* Avisos breves para confirmar operaciones o mostrar errores. */
+.toast {
+  position: fixed;
+  bottom: 26px;
+  right: 28px;
+  background: #20364f;
+  color: white;
+  padding: 13px 21px;
+  border-radius: 10px;
+  font-size: 12px;
+  box-shadow: 0 8px 35px #16294430;
+  z-index: 20;
+  max-width: min(480px,calc(100% - 40px));
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity .2s,transform .2s;
+}
+
+.toast.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast.error {
+  background: #a54252;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+
+/* Los segmentos del indicador de disponibilidad se reparten el ancho. */
+.progress > span {
+  flex: 1;
+}
+

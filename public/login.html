@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LENS · Iniciar sesión</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/acceso.css">
+  <script type="module" src="/js/login.js"></script>
+</head>
+<body class="login-page">
+  <main class="login-card panel">
+    <img src="/favicon.svg" alt="LENS" width="48" height="48">
+    <h1>Inicia sesión</h1>
+    <p class="muted">LENS · Piero Producciones</p>
+    <form id="login-form" method="post" action="/api/auth/login">
+      <label class="field">Usuario
+        <input name="nombre_usuario" autocomplete="username" maxlength="50" required autofocus>
+      </label>
+      <label class="field">Contraseña
+        <input name="clave_acceso" type="password" autocomplete="current-password" required>
+      </label>
+      <p class="form-error" id="login-error" role="alert"></p>
+      <button class="button primary" type="submit">Entrar</button>
+    </form>
+  </main>
+</body>
+</html>
